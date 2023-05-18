@@ -1,0 +1,15 @@
+/* Add CSS styles for your website here */
+  
+.data {
+    display: flex;
+    margin-right: 20px;
+  }
+
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
