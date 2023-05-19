@@ -1,16 +1,17 @@
 // JavaScript code to fetch data from NodeMCU and update the HTML elements
 
-client = new Paho.MQTT.Client("mqtt.netpie.io", 443, "68487dfa-0cc5-479a-bb8b-bce72c2f4fc3");
+client = new Paho.MQTT.Client("mqtt.netpie.io", 443, "6b87334d-15e1-4b11-a2de-dc1da933282a");
 var options = {
     useSSL: true,
-    userName: "sSKrp69Gh7PitmL2RLSJcqQYu6ZGibiF",
-    password: "Secret",
+    userName: "fA7rZWfcWMxYqa4UdKMwJbcePnJY9wYg",
+    password: "dGYsdxZZIk~I8g1arTp~0tkceUPzhqMv",
     onSuccess:onConnect,
     onFailure:doFail
 }
 client.connect(options);
 
 function onConnect() {
+    client.subscribe("@msg/feedback");
     console.log("connected");
     // const data = {
     //     "data":{
@@ -20,7 +21,6 @@ function onConnect() {
     // const msg = JSON.stringify(data);
     // console.log(msg); // Print the message to the console
     // client.publish("@shadow/data/update", data); 
-    client.subscribe("@msg/feedback");
 }
 
 function doFail(e){
