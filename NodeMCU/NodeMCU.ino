@@ -2,8 +2,8 @@
 #include <PubSubClient.h>
 #include <SoftwareSerial.h>
 
-const char* ssid = "Sawan12A_5G"; // Sawan12A_5G
-const char* password = "Sawan53721"; //Sawan53721
+const char* ssid = "xiaomiwifi"; // Sawan12A_5G
+const char* password = "qwertyuiop"; //Sawan53721
 const char* mqtt_server = "broker.netpie.io";
 const int mqtt_port = 1883;
 const char* mqtt_Client = "68487dfa-0cc5-479a-bb8b-bce72c2f4fc3";
@@ -12,10 +12,12 @@ const char* mqtt_password = "_iNlUj0w-1czEuk0V(moGZ#P1shsiEw!";
 
 char msg[100];
 String tmp = "";
-int Humidity = 0;
-int WeatherTemp = 0;
-int HeartRate = 0;
-int HumanTemp = 0;
+int HeartRate   = 1;
+int HumanTemp   = 2;
+int Humidity    = 3;
+int WeatherTemp = 4;
+
+
 
 // Set up a new SoftwareSerial object
 SoftwareSerial mySerial;
@@ -28,6 +30,8 @@ void reconnect() {
     Serial.print("Attempting MQTT connection...");
     if (client.connect(mqtt_Client, mqtt_username, mqtt_password)) {
       Serial.println("connected");
+      setup();
+      //break;
     }
     else {
       Serial.print("failed, rc=");
@@ -62,6 +66,7 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
   client.setServer(mqtt_server, mqtt_port);
+  loop();
 //  client.setCallback(callback);
 }
 void loop() {
@@ -71,18 +76,15 @@ void loop() {
   client.loop();
 //   read from uart
   String data;
-  bool send_data = false;
+  bool send_data = true;
   String case_send = "";
   digitalWrite(D1,HIGH); // signal interupt
-  if (mySerial.available() > 0) {
-        
-    }
   // update database
   if(send_data){
-    String data = "{\"data\": {\"Humidity\":" + String(Humidity) +
-    ",\"WeatherTemp\":\""+String(WeatherTemp) + 
-    ",\"HumanTemp\":\""+String(HumanTemp) + 
-    "\",\"HeartRate\":\""+HeartRate + "\"}}"; // send to @shadow/data/update 
+    String data = "{\"data\":{\"HeartRate\":" + String(HeartRate) +
+    ",\"HumanTemp\":"+String(HumanTemp) + 
+    ",\"Humidity\":"+String(Humidity) + 
+    ",\"WeatherTemp\":"+String(WeatherTemp) +"}}"; // send to @shadow/data/update 
     Serial.println(data);
     data.toCharArray(msg, (data.length() + 1));
     client.publish("@shadow/data/update", msg); 
