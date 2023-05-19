@@ -6,29 +6,48 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 </head>
 <body>
-  <h1>Temperature and Heart Rate Monitoring</h1>
-    <div class="data">
-        <h2>Human Temperature</h2>
-        <div class="circle">
-            <img src="image/bodyTemperatureIcon.jpg" alt="Temperature Icon" width="50" height="50">
+    <h1>Temperature and Heart Rate Monitoring</h1>
+    <div class="wrapper">
+        <div class="box">
+            <div class="image">
+                <img src="image/bodyTemperatureIcon.jpg" alt="Temperature Icon" width="100" height="100">
+            </div>
+            <h1 id="humanTemperature"> 37 </h1>
+            <div>Human Temperature</div>
         </div>
-        <p id="humanTemperature"> 37 </p>
-    </div>
+      
+        <div class="box">
+            <div class="image">
+                <img src="image/hearthRate.png" alt="Heart Rate Icon" width="100" height="100">
+            </div>
+            <h1 id="heartRate"> 80 </h1>
+            <div>Heart Rate</div>
+        </div>
 
-    <div class="data">
-        <h2>Environment Temperature</h2>
-        <div class="circle">
-            <img src="image/temperature.png" alt="Temperature Icon" width="50" height="50">
-        </div>
-        <p id="environmentTemperature"> 25 </p>
-    </div>
+        
 
-    <div class="data">
-        <h2>Heart Rate</h2>
-        <div class="circle">
-            <img src="image/hearthRate.png" alt="Heart Rate Icon" width="50" height="50">
+        <div class="box" style="margin-left: 50px;">
+            <div class="image">
+                <img src="image/temperature.png" alt="Temperature Icon" width="100" height="100">
+            </div>
+            <h1 id="environmentTemperature"> 25 </h1>
+            <div>Environment Temperature</div>
         </div>
-        <p id="heartRate"> 80 </p>
+      
+        <div class="box">
+            <div class="image">
+                <img src="image/humidity.png" alt="Temperature Icon" width="100" height="100">
+            </div>
+            <h1 id="environmentHumidity"> 69 </h1>
+            <div>Environment Humidity</div>
+        </div>
+    </div>
+    <div style="background: ghostwhite; 
+        font-size: 20px; 
+        padding: 10px; 
+        border: 1px solid lightgray; 
+        margin: 10px;">
+        This is some dummy text.
     </div>
 
   <h2>Fan Control</h2>

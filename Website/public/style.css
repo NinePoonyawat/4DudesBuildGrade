@@ -1,5 +1,39 @@
 /* Add CSS styles for your website here */
   
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+}
+
+.box {
+  width: 100%;
+  padding: 10px; 
+  text-align: center;
+  color: white;
+  background-color: rgb(210, 60, 60);
+  border: 3px solid white;
+}
+
+.image {
+  display: inline-block;
+  color: white;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+}
+
+@media (min-width: 600px) {
+  .wrapper {
+    flex-direction: row;
+  }
+
+  .box {
+    width: auto;
+    flex-grow: 1;
+  }
+}
+
 .data {
     display: flex;
     margin-right: 20px;
