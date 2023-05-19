@@ -1,9 +1,14 @@
 #include <ESP8266WiFi.h>
-//#include <PubSubClient.h>
+#include <PubSubClient.h>
 #include <SoftwareSerial.h>
 
 const char* ssid = "Sawan12A_5G"; // Sawan12A_5G
 const char* password = "Sawan53721"; //Sawan53721
+const char* mqtt_server = "broker.netpie.io";
+const int mqtt_port = 1883;
+const char* mqtt_Client = "68487dfa-0cc5-479a-bb8b-bce72c2f4fc3";
+const char* mqtt_username = "sSKrp69Gh7PitmL2RLSJcqQYu6ZGibiF";
+const char* mqtt_password = "_iNlUj0w-1czEuk0V(moGZ#P1shsiEw!";
 
 char msg[100];
 String tmp = "";
@@ -11,6 +16,12 @@ int Humidity = 0;
 int WeatherTemp = 0;
 int HeartRate = 0;
 int HumanTemp = 0;
+
+// Set up a new SoftwareSerial object
+SoftwareSerial mySerial;
+
+WiFiClient espClient;
+PubSubClient client(espClient);
 
 void reconnect() {
   while (!client.connected()) {
