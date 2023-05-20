@@ -10,9 +10,10 @@ var options = {
 }
 
 var webData = {
-    environmentTemberature : null,
+    environmentTemperature : null,
     humanTemperature : null,
-    hearthRate : null
+    hearthRate : null,
+    humidity : null
 }
 
 client.connect(options);
@@ -34,20 +35,25 @@ function doFail(e){
     console.log("failed : " + e);
 }
 
-//client.onConnectionLost = function(responseObject) {
-//    if (responseObject.errorCode !== 0) console.log("onConnectionLost : " + responseObject.errorCode);
-//}
+client.onConnectionLost = function(responseObject) {
+    if (responseObject.errorCode !== 0)
+    {
+        console.log("Automatic reconnect is currently active.");
+    }
+}
 
 client.onMessageArrived = function(message) {
     console.log("message arrived: " + message.payloadString);
-    data = message.payloadString;
-    webData.environmentTemberature = parseFloat(data.environmentTemberature);
-    webData.humanTemperature = parseFloat(data.humanTemperature);
-    webData.hearthRate = parseFloat(data.hearthRate);
+    data = JSON.parse(message.payloadString);
+    webData.environmentTemperature = parseFloat(data.data.WeatherTemp);
+    webData.humanTemperature = parseFloat(data.data.HumanTemp);
+    webData.hearthRate = parseFloat(data.data.HeartRate);
+    webData.humidity = parseFloat(data.data.Humidity);
 
-    document.getElementById('environmentTemperature').textContent = webData.environmentTemberature;
+    document.getElementById('environmentTemperature').textContent = webData.environmentTemperature;
     document.getElementById('humanTemperature').textContent = webData.humanTemperature;
     document.getElementById('heartRate').textContent = webData.hearthRate;
+    document.getElementById('environmentHumidity').textContent = webData.humidity;
 
     console.log("data arrived: " + data);
 }
