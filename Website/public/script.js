@@ -79,19 +79,12 @@ client.onMessageArrived = function(message) {
 //     document.getElementById('heartRate').textContent = data.heartRate;
 //   });
 
-// // Function to toggle the fan
-// function toggleFan() {
-//   fetch('http://your_nodeMCU_IP_address/toggle_fan', { method: 'POST' })
-//     .then(response => {
-//       if (response.ok) {
-//         console.log('Fan toggled successfully.');
-//       } else {
-//         console.log('Failed to toggle the fan.');
-//       }
-//     })
-//     .catch(error => {
-//       console.error('An error occurred while toggling the fan:', error);
-//     });
-// }
+ // Function to toggle the fan
+ function toggleFan() {
+    var message = new Paho.MQTT.Message("Hello");
+    message.destinationName = "@msg/fan";
+    console.log("button clicked");
+    client.publish(message);
+}
 
-// document.getElementById('fanButton').addEventListener('click', toggleFan);
+document.getElementById('fanButton').addEventListener('click', toggleFan);
