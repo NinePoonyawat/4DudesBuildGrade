@@ -8,10 +8,17 @@ var options = {
     onSuccess:onConnect,
     onFailure:doFail
 }
+
+var webData = {
+    environmentTemberature : null,
+    humanTemperature : null,
+    hearthRate : null
+}
+
 client.connect(options);
 
 function onConnect() {
-    client.subscribe("@msg/feedback");
+    client.subscribe("@msg/feedback",{ qos:0 });
     console.log("connected");
     // const data = {
     //     "data":{
@@ -27,9 +34,21 @@ function doFail(e){
     console.log("failed : " + e);
 }
 
+//client.onConnectionLost = function(responseObject) {
+//    if (responseObject.errorCode !== 0) console.log("onConnectionLost : " + responseObject.errorCode);
+//}
+
 client.onMessageArrived = function(message) {
     console.log("message arrived: " + message.payloadString);
     data = message.payloadString;
+    webData.environmentTemberature = parseFloat(data.environmentTemberature);
+    webData.humanTemperature = parseFloat(data.humanTemperature);
+    webData.hearthRate = parseFloat(data.hearthRate);
+
+    document.getElementById('environmentTemperature').textContent = webData.environmentTemberature;
+    document.getElementById('humanTemperature').textContent = webData.humanTemperature;
+    document.getElementById('heartRate').textContent = webData.hearthRate;
+
     console.log("data arrived: " + data);
 }
 
