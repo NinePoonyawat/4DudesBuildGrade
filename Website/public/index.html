@@ -1,58 +1,69 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Temperature and Heart Rate Monitoring</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
-</head>
-<body>
-    <h1>Temperature and Heart Rate Monitoring</h1>
-    <div class="wrapper">
-        <div class="box">
-            <div class="image">
-                <img src="image/bodyTemperatureIcon.jpg" alt="Temperature Icon" width="100" height="100">
-            </div>
-            <h1 id="humanTemperature"> 37 </h1>
-            <div>Human Temperature</div>
-        </div>
-      
-        <div class="box">
-            <div class="image">
-                <img src="image/hearthRate.png" alt="Heart Rate Icon" width="100" height="100">
-            </div>
-            <h1 id="heartRate"> 80 </h1>
-            <div>Heart Rate</div>
-        </div>
+    <head>
+        <title>Temperature and Heart Rate Monitoring</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div id="notification-box" class="hidden"><p id="notification-text"></p></div>
 
+        <div class="textbox" style="width: 400px; font-weight: bold; font-size: 50px;">
+            Temperature and Heart Rate Monitoring
+        </div>
         
+        <!--<div class="textbox" style="width: 300px; color: crimson" id="output">
+            "ร้อนสัส มึงกำลังจะตายนะ"
+        </div>-->
 
-        <div class="box" style="margin-left: 50px;">
-            <div class="image">
-                <img src="image/temperature.png" alt="Temperature Icon" width="100" height="100">
-            </div>
-            <h1 id="environmentTemperature"> 25 </h1>
-            <div>Environment Temperature</div>
+        <div class="textbox" style="width: 200px; margin-left: 100px">
+            Fan Control
+            <button id="fanButton">Toggle Fan</button>
         </div>
-      
-        <div class="box">
-            <div class="image">
-                <img src="image/humidity.png" alt="Temperature Icon" width="100" height="100">
+
+        <div class="wrapper">
+            <div class="boxleft">
+                <div class="image">
+                    <img src="image/body.png" alt="Temperature Icon" width="100" height="100">
+                </div>
+                <div class="data" id="humanTemperature"> 37 </div>
+                <div class="name"> Human Temperature </div>
             </div>
-            <h1 id="environmentHumidity"> 69 </h1>
-            <div>Environment Humidity</div>
+        
+            <div class="boxleft">
+                <div class="image">
+                    <img src="image/heartrate.png" alt="Heart Rate Icon" width="100" height="100">
+                </div>
+                <div class="data" id="heartRate"> 80 bpm </div>
+                <div class="name"> Heart Rate </div>
+            </div>
+
+            
+
+            <div class="boxright" style="margin-left: 20px;">
+                <div class="image">
+                    <img src="image/temperature.png" alt="Temperature Icon" width="100" height="100">
+                </div>
+                <div class="data" id="environmentTemperature"> 25 </div>
+                <div class="name"> Environment Temperature </div>
+            </div>
+        
+            <div class="boxright">
+                <div class="image">
+                    <img src="image/humidity.png" alt="Temperature Icon" width="100" height="100">
+                </div>
+                <div class="data" id="environmentHumidity"> 69% </div>
+                <div class="name"> Environment Humidity </div>
+            </div>
         </div>
-    </div>
-    <div style="background: ghostwhite; 
-        font-size: 20px; 
-        padding: 10px; 
-        border: 1px solid lightgray; 
-        margin: 10px;">
-        This is some dummy text.
-    </div>
-
-  <h2>Fan Control</h2>
-  <button id="fanButton">Toggle Fan</button>
-
-  <script src="script.js"></script>
-</body>
+        
+        <div class="textbox" id="output" style="width: 800px;">
+            <div style="font-size: 30px">รู้หรือไม่?</div>
+            &emsp;รู้จักโรคลมแดดโรคลมแดดหรือภาวะฉุกเฉินจากความร้อน (Heatstroke) เป็นภาวะที่เกิดจากร่างกายมีความร้อนสูงเกินไป ซึ่งมักเกิดจากการทำงาน ใช้แรงงาน หรือออกกำลังกายอย่างหนักในภาวะแวดล้อมที่มีอุณหภูมิสูง โดยภาวะฮีทสโตรกมักเกิดขึ้นเมื่ออุณหภูมิร่างกายสูง 40 องศาเซลเซียส (104 ฟาเรนไฮต์) หรือมากกว่า และมักจะเกิดในช่วงฤดูร้อนหรือบริเวณที่มีความชื้นในอากาศสูง 
+            ภาวะ Heatstroke อาจทำให้เกิดอันตรายต่ออวัยวะสำคัญ เช่น สมอง หัวใจ ปอด ไต และกล้ามเนื้อได้ หากไม่ได้รับการรักษาที่ถูกต้องอย่างทันท่วงที ที่สำคัญหากผู้ป่วยได้รับการรักษาที่ล่าช้าจะมีโอกาสเกิดภาวะแทรกซ้อนที่อันตราย โดยบางรายถึงขั้นพิการและเสียชีวิตได้ 
+        </div>
+        
+        
+        <script src="script.js"></script>
+    </body>
 </html>
