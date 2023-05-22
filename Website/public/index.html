@@ -7,18 +7,20 @@
     </head>
     <body>
         <div id="notification-box" class="hidden"><p id="notification-text"></p></div>
-
-        <div class="textbox" style="width: 400px; font-weight: bold; font-size: 50px;">
-            Temperature and Heart Rate Monitoring
-        </div>
         
-        <!--<div class="textbox" style="width: 300px; color: crimson" id="output">
-            "ร้อนสัส มึงกำลังจะตายนะ"
-        </div>-->
-
-        <div class="textbox" style="width: 200px; margin-left: 100px">
-            Fan Control
-            <button id="fanButton">Toggle Fan</button>
+        <div class="wrapper">
+            <div class="textbox" style="width: 400px; font-weight: bold; font-size: 50px;">
+                Temperature and Heart Rate Monitoring
+            </div>
+            
+            <!--<div class="textbox" style="width: 300px; color: crimson" id="output">
+                "ร้อนสัส มึงกำลังจะตายนะ"
+            </div>-->
+    
+            <div class="textbox" style="width: 200px; margin-left: 100px; align-items: center">
+                Fan Control
+                <button id="fanButton" class="data" style="font-size: 20px; padding: 10px">TOGGLE FAN</button>
+            </div>
         </div>
 
         <div class="wrapper">
@@ -26,16 +28,18 @@
                 <div class="image">
                     <img src="image/body.png" alt="Temperature Icon" width="100" height="100">
                 </div>
-                <div class="data" id="humanTemperature"> 37 </div>
                 <div class="name"> Human Temperature </div>
+                <div class="data" id="humanTemperature" style="margin-bottom: -15px"> 37 </div>
+                <div class="data" style="font-size: 25px"> °C </div>
             </div>
         
             <div class="boxleft">
                 <div class="image">
                     <img src="image/heartrate.png" alt="Heart Rate Icon" width="100" height="100">
                 </div>
-                <div class="data" id="heartRate"> 80 bpm </div>
                 <div class="name"> Heart Rate </div>
+                <div class="data" id="heartRate" style="margin-bottom: -15px"> 80 </div>
+                <div class="data" style="font-size: 25px"> BPM </div>
             </div>
 
             
@@ -44,16 +48,18 @@
                 <div class="image">
                     <img src="image/temperature.png" alt="Temperature Icon" width="100" height="100">
                 </div>
-                <div class="data" id="environmentTemperature"> 25 </div>
                 <div class="name"> Environment Temperature </div>
+                <div class="data" id="environmentTemperature" style="margin-bottom: -15px"> 25 </div>
+                <div class="data" style="font-size: 25px"> °C </div>
             </div>
         
             <div class="boxright">
                 <div class="image">
                     <img src="image/humidity.png" alt="Temperature Icon" width="100" height="100">
                 </div>
-                <div class="data" id="environmentHumidity"> 69% </div>
                 <div class="name"> Environment Humidity </div>
+                <div class="data" id="environmentHumidity" style="margin-bottom: -15px"> 69 </div>
+                <div class="data" style="font-size: 25px"> % </div>
             </div>
         </div>
         
