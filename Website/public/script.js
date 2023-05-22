@@ -84,13 +84,15 @@ client.onMessageArrived = function(message) {
  // Function to toggle the fan
 
  function UpdateNotificationBox() {
-   if (isBoxActive && !checkHeatStroke())
+   if (isBoxActive && checkHeatStroke())
    {
+     console.log('inactive box');
      hideNotification();
      isBoxActive = false;
    } 
-   else if (!isBoxActive && checkHeatStroke())
+   else if (!isBoxActive && !checkHeatStroke())
    {
+     console.log('active box');
      showNotification();
      isBoxActive = true;
    }
@@ -98,14 +100,15 @@ client.onMessageArrived = function(message) {
 
  function showNotification() {
     // Set the text of the notification
-    notificationText.textContent = notificationText;
+    document.getElementById('notification-text').textContent = 'oh you see me';
     // Show the notification box
-    notificationBox.classList.remove('hidden');
+    document.getElementById('notification-box').classList.remove('hidden');
  }
     // Function to hide the notification box
  function hideNotification() {
     // Hide the notification box
-    notificationBox.classList.add('hidden');
+    document.getElementById('notification-text').textContent = '';
+    document.getElementById('notification-box').classList.add('hidden');
  }
 
  function calculateHeatIndex(temperature, humidity) {
@@ -131,7 +134,7 @@ client.onMessageArrived = function(message) {
   function checkHeatStroke() {
     var risk = 0;
   
-    var heatIndex = calculateHeatIndex(WeatherTemp, Humidity);
+    var heatIndex = calculateHeatIndex(webData.WeatherTemp, webData.humidity);
     if (heatIndex < 90.0) {
   
     } else if (heatIndex < 103.0) {
@@ -142,18 +145,19 @@ client.onMessageArrived = function(message) {
       risk += 3;
     }
   
-    if (HeartRate > 200) {
+    if (webData.heartRate > 200) {
       risk += 2;
-    } else if (HeartRate > 150) {
+    } else if (webData.heartRate > 150) {
       risk += 1;
     }
   
-    if (HumanTemp > 40) {
+    if (webData.humanTemperature > 40) {
       risk += 2;
-    } else if (HumanTemp > 37) {
+    } else if (webData.humanTemperature > 37) {
       risk += 1;
     }
   
+    console.log(risk);
     return risk < 5;
   }
 
@@ -166,6 +170,28 @@ client.onMessageArrived = function(message) {
   } else {
     console.log("MQTT client is not connected");
   }
+}
+
+function callFunction() {
+  // Get the values from the input boxes
+  var value1 = document.getElementById("input1").value;
+  var value2 = document.getElementById("input2").value;
+  var value3 = document.getElementById("input3").value;
+  var value4 = document.getElementById("input4").value;
+
+  // Call your function with the values as parameters
+  webData.environmentTemperature = value1;
+  webData.humanTemperature = value2;
+  webData.hearthRate = value3;
+  webData.humidity = value4;
+
+  document.getElementById('environmentTemperature').textContent = webData.environmentTemperature;
+  document.getElementById('humanTemperature').textContent = webData.humanTemperature;
+  document.getElementById('heartRate').textContent = webData.hearthRate;
+  document.getElementById('environmentHumidity').textContent = webData.humidity;
+
+  UpdateNotificationBox();
+  
 }
 
 document.getElementById('fanButton').addEventListener('click', toggleFan);
