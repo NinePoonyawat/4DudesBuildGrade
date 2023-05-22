@@ -11,7 +11,7 @@ client = new Paho.MQTT.Client("mqtt.netpie.io", 443, "6b87334d-15e1-4b11-a2de-dc
 var options = {
     useSSL: true,
     userName: "fA7rZWfcWMxYqa4UdKMwJbcePnJY9wYg",
-    password: "dGYsdxZZIk~I8g1arTp~0tkceUPzhqMv",
+    password: "Secret",
     onSuccess:onConnect,
     onFailure:doFail
 }
@@ -27,7 +27,7 @@ client.connect(options);
 
 function onConnect() {
     client.subscribe("@msg/feedback",{ qos:0 });
-    client.subscribe("@msg/fan");
+    //client.subscribe("@msg/fan");
     console.log("connected");
     // const data = {
     //     "data":{
@@ -41,13 +41,6 @@ function onConnect() {
 
 function doFail(e){
     console.log("failed : " + e);
-}
-
-client.onConnectionLost = function(responseObject) {
-    if (responseObject.errorCode !== 0)
-    {
-        console.log("Automatic reconnect is currently active.");
-    }
 }
 
 client.onMessageArrived = function(message) {
@@ -67,7 +60,6 @@ client.onMessageArrived = function(message) {
 
     console.log("data arrived: " + data);
 }
-
 // // Fetch and display human temperature
 // fetch('http://your_nodeMCU_IP_address/human_temperature')
 //   .then(response => response.json())
@@ -166,11 +158,14 @@ client.onMessageArrived = function(message) {
   }
 
  function toggleFan() {
+    if (client.isConnected()) {
     var message = new Paho.MQTT.Message("Hello");
     message.destinationName = "@msg/fan";
     client.send(message);
-    console.log("button clicked");
-    //client.publish(message);
+    console.log("Button clicked");
+  } else {
+    console.log("MQTT client is not connected");
+  }
 }
 
 document.getElementById('fanButton').addEventListener('click', toggleFan);
