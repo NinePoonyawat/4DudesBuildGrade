@@ -96,3 +96,12 @@
 .hidden {
     display: none;
 }
+
+.fan-notication {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 200px;
+    margin-left: 100px;
+}

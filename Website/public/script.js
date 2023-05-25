@@ -100,6 +100,15 @@ client.onMessageArrived = function(message) {
       document.getElementById('notification-text').textContent = "High chance of heat stroke! Take immediate action: seek shade or cool shelter and hydrate yourself adequately to prevent overheating.";
       document.getElementById('notification-box').style.backgroundColor = 'rgb(255, 68, 68)';
     }
+
+    if (x < 5)
+    {
+      document.getElementById('fan-mode').textContent = "OFF";
+    }
+    else
+    {
+      document.getElementById('fan-mode').textContent = "ON";
+    }
  }
 
  function showNotification() {
