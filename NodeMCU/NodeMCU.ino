@@ -12,7 +12,7 @@ const char* mqtt_password = "_iNlUj0w-1czEuk0V(moGZ#P1shsiEw!";
 
 char msg[100];
 String tmp = "";
-int HeartRate   = 1;
+int HeartRate   = 0;
 int HumanTemp   = 2;
 int Humidity    = 3;
 int WeatherTemp = 4;
@@ -63,7 +63,6 @@ float calculateHeatIndex(float temperature, float humidity) {
                     + (c5 * temperature * temperature) + (c6 * humidity * humidity)
                     + (c7 * temperature * temperature * humidity) + (c8 * temperature * humidity * humidity)
                     + (c9 * temperature * temperature * humidity * humidity);
-
     return heatIndex;
 }
 
@@ -93,7 +92,7 @@ bool CheckHeatStroke() {
   } else if (HumanTemp > 37) {
     risk += 1;
   }
-
+  Serial.println(String(risk)); 
   return risk < 5;
 }
 
@@ -138,20 +137,17 @@ void loop() {
   digitalWrite(D1,LOW); // signal interupt
   digitalWrite(D2,LOW);
   // update database
-  if (CheckHeatStroke() && !fanOpening) {
-    Serial.println("Turn Fan on");
-    delay(100);
-    //digitalWrite(D1,LOW);
-    fanOpening = true;
-  } else if (!CheckHeatStroke()) {
-    Serial.println("Turn Fan off");
-    delay(100);
-    //digitalWrite(D2,LOW);
-    fanOpening = false;
+  if (CheckHeatStroke()) {
+    //Serial.println("Turn Fan off");
+    digitalWrite(D2,HIGH);
+    
+  } else {
+    //Serial.println("Turn Fan on");
+    digitalWrite(D1,HIGH);
   }
   if (mySerial.available() > 0) {
     char character = mySerial.read();
-    //Serial.write(character);
+    Serial.write(character);
     if (character == '\r') {
       int space = tmp.indexOf(' ');
       //Serial.println(tmp.substring(space+1,tmp.length()-1));
