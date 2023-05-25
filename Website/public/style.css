@@ -90,6 +90,7 @@
     padding: 10px;
     border: 1px solid #ccc;
     display: inline-block;
+    background-color: rgb(191, 220, 223);
 }
   
 .hidden {
