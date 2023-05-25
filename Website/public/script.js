@@ -84,17 +84,18 @@ client.onMessageArrived = function(message) {
  // Function to toggle the fan
 
  function UpdateNotificationBox() {
-   if (isBoxActive && checkHeatStroke())
+   var x = checkHeatStroke();
+   if (x < 3)
    {
-     console.log('inactive box');
-     hideNotification();
-     isBoxActive = false;
-   } 
-   else if (!isBoxActive && !checkHeatStroke())
+      document.getElementById('notification-text').textContent = "Low chance of heat stroke observed. Stay hydrated, avoid prolonged exposure to direct sunlight, and be mindful of your body's temperature.";
+   }
+   else if (x < 5)
    {
-     console.log('active box');
-     showNotification();
-     isBoxActive = true;
+      document.getElementById('notification-text').textContent = "Moderate chance of heat stroke detected. To prevent heat exhaustion, limit outdoor activities, find shaded areas, and stay hydrated.";
+   }
+   else
+   {
+      document.getElementById('notification-text').textContent = "High chance of heat stroke! Take immediate action: seek shade or cool shelter and hydrate yourself adequately to prevent overheating.";
    }
  }
 
@@ -158,7 +159,7 @@ client.onMessageArrived = function(message) {
     }
   
     console.log(risk);
-    return risk < 5;
+    return risk;
   }
 
  function toggleFan() {
