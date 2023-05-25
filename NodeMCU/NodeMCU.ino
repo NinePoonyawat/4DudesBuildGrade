@@ -42,9 +42,59 @@ void reconnect() {
   }
 }
 
+ void callback(char* topic, byte* payload, unsigned int length) {
+   Serial.println("Message arrived");
+   digitalWrite(D2,HIGH);
+}
+
+float calculateHeatIndex(float temperature, float humidity) {
+    // Calculate the heat index
+    float c1 = -8.78469475556;
+    float c2 = 1.61139411;
+    float c3 = 2.33854883889;
+    float c4 = -0.14611605;
+    float c5 = -0.012308094;
+    float c6 = -0.0164248277778;
+    float c7 = 0.002211732;
+    float c8 = 0.00072546;
+    float c9 = -0.000003582;
+
+    float heatIndex = c1 + (c2 * temperature) + (c3 * humidity) + (c4 * temperature * humidity)
+                    + (c5 * temperature * temperature) + (c6 * humidity * humidity)
+                    + (c7 * temperature * temperature * humidity) + (c8 * temperature * humidity * humidity)
+                    + (c9 * temperature * temperature * humidity * humidity);
+
+    return heatIndex;
+}
+
 // check if heat stroke
 bool CheckHeatStroke() {
-  return false;
+  int risk = 0;
+  
+  float heatIndex = calculateHeatIndex(WeatherTemp, Humidity);
+  if (heatIndex < 90.0) {
+
+  } else if (heatIndex < 103.0) {
+    risk += 1;
+  } else if (heatIndex < 125.0) {
+    risk += 2;
+  } else {
+    risk += 3;
+  }
+
+  if (HeartRate > 200) {
+    risk += 2;
+  } else if (HeartRate > 150) {
+    risk += 1;
+  }
+
+  if (HumanTemp > 40) {
+    risk += 2;
+  } else if (HumanTemp > 37) {
+    risk += 1;
+  }
+
+  return risk < 5;
 }
 
 void setup() {
@@ -53,8 +103,8 @@ void setup() {
   delay(1000);
   pinMode(D6, INPUT);
   pinMode(D8, OUTPUT);
-  pinMode(D1, OUTPUT);
-  pinMode(D2, OUTPUT);
+  pinMode(D1, OUTPUT); // OnPin
+  pinMode(D2, OUTPUT); // togglePin
   // Set the baud rate for the SoftwareSerial object
   mySerial.begin(9600,SWSERIAL_8N1, D6, D8, false);
   //---------------
@@ -72,8 +122,9 @@ void setup() {
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
   client.setServer(mqtt_server, mqtt_port);
+  client.subscribe("@msg/fan");
+  client.setCallback(callback);
   loop();
-//  client.setCallback(callback);
 }
 void loop() {
   if (!client.connected()) {
@@ -84,18 +135,18 @@ void loop() {
   String data;
   bool send_data = false;
   String case_send = "";
-  digitalWrite(D1,HIGH); // signal interupt
-  digitalWrite(D2,HIGH);
+  digitalWrite(D1,LOW); // signal interupt
+  digitalWrite(D2,LOW);
   // update database
   if (CheckHeatStroke() && !fanOpening) {
-    //Serial.println("Turn Fan on");
+    Serial.println("Turn Fan on");
     delay(100);
-    digitalWrite(D1,LOW);
+    //digitalWrite(D1,LOW);
     fanOpening = true;
   } else if (!CheckHeatStroke()) {
-    //Serial.println("Turn Fan off");
+    Serial.println("Turn Fan off");
     delay(100);
-    digitalWrite(D2,LOW);
+    //digitalWrite(D2,LOW);
     fanOpening = false;
   }
   if (mySerial.available() > 0) {
@@ -110,6 +161,14 @@ void loop() {
       }
       if (tmp[0] == 'O') {
         HumanTemp = tmp.substring(space+1,tmp.length()-1).toInt();
+        send_data = true;
+      }
+      if (tmp[0] == 'W') {
+        WeatherTemp = tmp.substring(space+1,tmp.length()-1).toInt();
+        send_data = true;
+      }
+      if (tmp[0] == 'h') {
+        Humidity = tmp.substring(space+1,tmp.length()-1).toInt();
         send_data = true;
       }
       tmp = "";
