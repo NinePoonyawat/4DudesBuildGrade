@@ -27,16 +27,7 @@ client.connect(options);
 
 function onConnect() {
     client.subscribe("@msg/feedback",{ qos:0 });
-    //client.subscribe("@msg/fan");
     console.log("connected");
-    // const data = {
-    //     "data":{
-    //         "WeatherTemp" : 10
-    //     }
-    // };
-    // const msg = JSON.stringify(data);
-    // console.log(msg); // Print the message to the console
-    // client.publish("@shadow/data/update", data); 
 }
 
 function doFail(e){
@@ -85,23 +76,23 @@ client.onMessageArrived = function(message) {
 
  function UpdateNotificationBox() {
    var x = checkHeatStroke();
-   if (x < 2)
+   if (x == 0)
    {
       document.getElementById('notification-text').textContent = "Low chance of heat stroke observed. Stay hydrated, avoid prolonged exposure to direct sunlight, and be mindful of your body's temperature.";
       document.getElementById('notification-box').style.backgroundColor = 'rgb(75, 181, 67)';
     }
-   else if (x < 5)
-   {
-      document.getElementById('notification-text').textContent = "Moderate chance of heat stroke detected. To prevent heat exhaustion, limit outdoor activities, find shaded areas, and stay hydrated.";
-      document.getElementById('notification-box').style.backgroundColor = 'rgb(255, 191, 0)';
-    }
+   //else if (x < 5)
+   //{
+   //   document.getElementById('notification-text').textContent = "Moderate chance of heat stroke detected. To prevent heat exhaustion, limit outdoor activities, find shaded areas, and stay hydrated.";
+   //   document.getElementById('notification-box').style.backgroundColor = 'rgb(255, 191, 0)';
+   // }
    else
    {
       document.getElementById('notification-text').textContent = "High chance of heat stroke! Take immediate action: seek shade or cool shelter and hydrate yourself adequately to prevent overheating.";
       document.getElementById('notification-box').style.backgroundColor = 'rgb(255, 68, 68)';
     }
 
-    if (x < 5)
+    if (x < 1)
     {
       document.getElementById('fan-mode').textContent = "OFF";
     }
