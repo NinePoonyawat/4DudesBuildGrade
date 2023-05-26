@@ -76,23 +76,23 @@ client.onMessageArrived = function(message) {
 
  function UpdateNotificationBox() {
    var x = checkHeatStroke();
-   if (x == 0)
+   if (x < 3)
    {
       document.getElementById('notification-text').textContent = "Low chance of heat stroke observed. Stay hydrated, avoid prolonged exposure to direct sunlight, and be mindful of your body's temperature.";
       document.getElementById('notification-box').style.backgroundColor = 'rgb(75, 181, 67)';
     }
-   //else if (x < 5)
-   //{
-   //   document.getElementById('notification-text').textContent = "Moderate chance of heat stroke detected. To prevent heat exhaustion, limit outdoor activities, find shaded areas, and stay hydrated.";
-   //   document.getElementById('notification-box').style.backgroundColor = 'rgb(255, 191, 0)';
-   // }
+   else if (x < 5)
+   {
+      document.getElementById('notification-text').textContent = "Moderate chance of heat stroke detected. To prevent heat exhaustion, limit outdoor activities, find shaded areas, and stay hydrated.";
+      document.getElementById('notification-box').style.backgroundColor = 'rgb(255, 191, 0)';
+    }
    else
    {
       document.getElementById('notification-text').textContent = "High chance of heat stroke! Take immediate action: seek shade or cool shelter and hydrate yourself adequately to prevent overheating.";
       document.getElementById('notification-box').style.backgroundColor = 'rgb(255, 68, 68)';
     }
 
-    if (x < 1)
+    if (x < 5)
     {
       document.getElementById('fan-mode').textContent = "OFF";
     }
